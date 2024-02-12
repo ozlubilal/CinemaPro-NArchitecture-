@@ -1,6 +1,7 @@
 ﻿using Application.Features.Films.Commands.Delete;
 using Application.Services.Repositories;
 using AutoMapper;
+using Core.Application.Pipelines.Caching;
 using Domain.Entities;
 using MediatR;
 using System;
@@ -11,9 +12,15 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Films.Commands.Delete;
 
-public class DeleteFilmCommand : IRequest<DeletedFilmResponse>
+public class DeleteFilmCommand : IRequest<DeletedFilmResponse>, ICacheRemoverRequest
 {
     public Guid Id { get; set; }
+
+    public string? CacheKey => "";
+
+    public bool BypassCache => false;
+
+    public string? CacheGroupKey => "GetFilms";
 
     public class DeleteFilmCommandHandler : IRequestHandler<DeleteFilmCommand, DeletedFilmResponse>
     {

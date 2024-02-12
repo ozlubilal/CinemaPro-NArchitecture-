@@ -1,5 +1,7 @@
 ﻿using Application.Services.Repositories;
 using AutoMapper;
+using Core.Application.Pipelines.Authorization;
+using Core.Application.Pipelines.Caching;
 using Core.Application.Requests;
 using Core.Application.Responses;
 using Core.Persistence.Paging;
@@ -14,9 +16,19 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Films.Queries.GetList;
 
-public class GetListFilmQuery:IRequest<GetListResponse<GetListFilmListItemDto>>
+public class GetListFilmQuery:IRequest<GetListResponse<GetListFilmListItemDto>>,ICachableRequest
 {
     public PageRequest  PageRequest  { get; set; }
+
+    //public string[] Roles => new string[] { "admin" };
+
+    public string CacheKey => $"GetListFilmQuery({PageRequest.PageIndex},{PageRequest.PageSize})";
+
+    public bool BypassCache { get; }
+
+    public string? CacheGroupKey => "GetFilms";
+
+    public TimeSpan? SlidingExpiration { get; }
 
     public class GetListFilmQueryHandler : IRequestHandler<GetListFilmQuery, GetListResponse<GetListFilmListItemDto>>
     {

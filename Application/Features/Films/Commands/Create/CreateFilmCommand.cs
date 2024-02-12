@@ -1,5 +1,8 @@
 ﻿using Application.Services.Repositories;
 using AutoMapper;
+using Core.Application.Pipelines.Authorization;
+using Core.Application.Pipelines.Caching;
+using Core.Application.Requests;
 using Domain.Entities;
 using MediatR;
 using System;
@@ -10,9 +13,15 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Films.Commands.Create;
 
-public class CreateFilmCommand : IRequest<CreatedFilmResponse>
+public class CreateFilmCommand : IRequest<CreatedFilmResponse>,ICacheRemoverRequest
 {
     public string Name { get; set; }
+
+    public string? CacheKey => "";
+
+    public bool BypassCache => false;
+
+    public string? CacheGroupKey => "GetFilms";
 
     public class CreateFilmCommandHandler : IRequestHandler<CreateFilmCommand, CreatedFilmResponse>
     {

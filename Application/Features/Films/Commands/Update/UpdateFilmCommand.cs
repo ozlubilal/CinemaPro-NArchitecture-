@@ -1,5 +1,6 @@
 ﻿using Application.Services.Repositories;
 using AutoMapper;
+using Core.Application.Pipelines.Caching;
 using Domain.Entities;
 using MediatR;
 using System;
@@ -11,10 +12,16 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Films.Commands.Update;
 
-public class UpdateFilmCommand : IRequest<UpdatedFilmResponse>
+public class UpdateFilmCommand : IRequest<UpdatedFilmResponse>, ICacheRemoverRequest
 {
     public Guid Id { get; set; }
     public string Name { get; set; }
+
+    public string? CacheKey => "";
+
+    public bool BypassCache => false;
+
+    public string? CacheGroupKey => "GetFilms";
 
     public class UpdateFilmCommandHandler : IRequestHandler<UpdateFilmCommand, UpdatedFilmResponse>
     {
@@ -31,7 +38,7 @@ public class UpdateFilmCommand : IRequest<UpdatedFilmResponse>
         {
             Film? film = await _filmRepository.GetAsync(predicate: f => f.Id == request.Id, cancellationToken: cancellationToken);
 
-            film = _mapper.Map(request,film);
+            film = _mapper.Map(request, film);
 
             await _filmRepository.UpdateAsync(film);
 
