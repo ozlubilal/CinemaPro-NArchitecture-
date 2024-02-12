@@ -12,5 +12,5 @@ public class GetListFilmSessionListItemDto
     public string FilmName { get; set; }
     public string SaloonName { get; set; }
     public decimal Price { get; set; }
-    public DateTime FilmSessionDateime { get; set; }
+    public DateTime FilmSessionDateTime { get; set; }
 }
