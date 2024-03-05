@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastru
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cinema", "WebApplication1\Cinema.csproj", "{7FE5CBFE-B2AF-401E-9039-5A7DA3FFC8D8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApp", "WebApp\WebApp.csproj", "{0607CD7D-BE2C-44BB-8E48-F2492AF1D08C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApp(Mvc)", "WebApp\WebApp(Mvc).csproj", "{0607CD7D-BE2C-44BB-8E48-F2492AF1D08C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
