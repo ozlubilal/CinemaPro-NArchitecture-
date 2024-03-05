@@ -1,0 +1,115 @@
+﻿@using System.Globalization
+@using Application.Features.FilmSessions.Queries.GetListByDynamic;
+@using Core.Application.Responses;
+@model GetListResponse<GetListByDynamicFilmSessionListItemDto>;
+@{
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+
+    // Bugünden itibaren bugünü ve perşembeye kadar olan günlerin listesi
+    DateTime today = DateTime.Today;
+    int daysUntilNextThursday = ((int)DayOfWeek.Thursday - (int)today.DayOfWeek + 7) % 7;
+    DateTime nextThursday = today.AddDays(daysUntilNextThursday);
+
+    List<DateTime> days = new List<DateTime>();
+    for (int i = 0; i <= daysUntilNextThursday; i++)
+    {
+        days.Add(today.AddDays(i));
+    }
+}
+
+<style>
+    .day-container:hover {
+        background-color: orange;
+        color: white;
+    }
+
+    .day-container {
+        margin-right: 10px;
+        background-color: #f0f0f0;
+        border-radius: 5px;
+        overflow: hidden;
+        display: inline-block;
+    }
+
+    .day-link:hover {
+        text-decoration: none;
+    }
+
+    .day-link {
+        text-decoration: none;
+    }
+
+    .day-info {
+        padding: 10px;
+        text-align: center;
+    }
+
+    .day-name {
+        font-weight: bold;
+        color: #333;
+        font-size: 18px;
+    }
+
+    .day-date {
+        color: #666;
+        font-size: 16px;
+    }
+
+    .selected-day .day-info {
+        background-color: orange;
+        color: white;
+    }
+</style>
+
+
+@*Günler*@
+<div class="text-center pt-3">
+    @foreach (var day in days)
+    {
+        <div class="day-container">
+            <a class="day-link" href="@Url.Action("FilmDetail", "UserFilm", new { date = day.ToString("yyyy-MM-dd") })" data-date="@day.ToString("yyyy-MM-dd")">
+                <div class="day-info">
+                    <div class="day-name">@day.ToString("dddd", new CultureInfo("tr-TR"))</div>
+                    <div class="day-date">@day.ToString("dd MMMM yyyy", new CultureInfo("tr-TR"))</div>
+                </div>
+            </a>
+        </div>
+    }
+</div>
+@*FilmSeansları*@
+<div class="bg-light p-5 row" style="min-height: 200px; max-width: 100%; overflow-x: auto;">
+    @if (Model.Items != null && Model.Items.Any())
+    {
+        <div class="col-md-3">
+            <img src="@Model.Items[0].ImageUrl" style="width: 200px;" height="270" class="card-img-top" />
+        </div>
+
+        @foreach (var item in Model.Items)
+        {
+            <div class="col-md-1 mx-2">
+                <button class="btn btn-outline-primary mb-3" 
+                        onclick="window.location.href='@Url.Action("Add","UserTicket",new {id=item.Id})'">
+                    @item.StartTime.ToString("hh\\:mm")
+                </button>
+                <h4>@item.SaloonName</h4>
+            </div>
+        }
+    }
+    
+</div>
+
+<script>
+
+    // Sayfa yenilendiğinde veya bir yönlendirme gerçekleştiğinde, seçilen günün arka plan rengini değiştir
+    window.onload = function () {
+        var urlParams = new URLSearchParams(window.location.search);
+        var selectedDay = urlParams.get('date'); // URL'den "date" parametresini alın
+        if (selectedDay) {
+            var selectedButton = document.querySelector('.day-link[data-date="' + selectedDay + '"]');
+            if (selectedButton) {
+                selectedButton.parentElement.classList.add('selected-day');
+            }
+        }
+    };
+</script>
+

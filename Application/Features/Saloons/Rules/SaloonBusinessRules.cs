@@ -1,5 +1,6 @@
 ﻿using Application.Features.Saloons.Constants;
 using Application.Services.Repositories;
+using Core.Application.Rules;
 using Core.CrossCuttingConcerns.Exceptions.Types;
 using Domain.Entities;
 using System;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Saloons.Rules;
 
-public class SaloonBusinessRules
+public class SaloonBusinessRules:BaseBusinessRules
 {
     private readonly ISaloonRepository _saloonRepository;
 

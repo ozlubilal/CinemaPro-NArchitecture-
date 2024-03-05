@@ -1,0 +1,48 @@
+﻿@using Application.Features.Films.Queries.GetList;
+@using Core.Application.Responses;
+
+@model GetListResponse<GetListFilmListItemDto>
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<div class="card-header text-center "><h2>Filmler</h2></div>
+
+@{
+    int rowCount = 0;
+}
+<div class="">
+    <button class="btn btn-success" onclick="window.location.href='@Url.Action("Add", "Film")'">Film Ekle</button>
+    <table class="table">
+        <thead>
+            <tr>
+                <th></th>
+                <th></th>
+                <th>Film Adı</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Items)
+            {
+                <tr>
+                    <td>@{rowCount++;} @rowCount</td>
+                    <td><img src="@item.ImageUrl" width="50" /></td>
+                    <td>@item.Name</td>                   
+                    <td>
+                        <button class="btn btn-sm btn-warning" onclick="window.location.href='@Url.Action("Update", "Film", new { id = item.Id })'">Güncelle</button>
+                    </td>
+                    <td><button class="btn btn-sm btn-danger" onclick="window.location.href='@Url.Action("Delete", "Film", new { id = item.Id })'">Sil</button></td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+</div>
+
+
+
+

@@ -10,8 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers;
 
-[Route("api/[controller]")]
-[ApiController]
+
 public class FilmsController : BaseController
 {
     [HttpPost]

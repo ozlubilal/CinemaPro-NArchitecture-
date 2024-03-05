@@ -1,4 +1,5 @@
-﻿using Application.Services.Repositories;
+﻿using Application.Features.Saloons.Rules;
+using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
 using MediatR;
@@ -18,17 +19,22 @@ public class CreateSaloonCommand:IRequest<CreatedSaloonResponse>
     {
         private readonly ISaloonRepository _saloonRepository;
         private readonly IMapper _mapper;
+        private readonly SaloonBusinessRules _saloonBusinessRules;
 
-        public CreateSaloonCommandHandler(ISaloonRepository saloonRepository, IMapper mapper)
+        public CreateSaloonCommandHandler(ISaloonRepository saloonRepository, IMapper mapper, SaloonBusinessRules saloonBusinessRules
+            )
         {
             _saloonRepository = saloonRepository;
             _mapper = mapper;
+            _saloonBusinessRules = saloonBusinessRules;
         }
 
         public async Task<CreatedSaloonResponse> Handle(CreateSaloonCommand request, CancellationToken cancellationToken)
         {
             Saloon saloon=_mapper.Map<Saloon>(request);
-            
+
+            await _saloonBusinessRules.SaloonNameCannotBeDuplicatedWhenInserted(saloon.Name);
+
             await _saloonRepository.AddAsync(saloon);
 
             CreatedSaloonResponse createdSaloonResponse = _mapper.Map<CreatedSaloonResponse>(saloon);

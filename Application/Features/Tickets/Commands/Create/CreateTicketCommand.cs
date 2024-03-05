@@ -14,11 +14,13 @@ namespace Application.Features.Tickets.Commands.Create;
 
 public class CreateTicketCommand : IRequest<CreatedTicketResponse>
 {   
-    public string FirstName { get; set; }
-    public string  LastName { get; set; }
-    public string PhoneNumber { get; set; }
+    public string? FirstName { get; set; }
+    public string?  LastName { get; set; }
+    public string? PhoneNumber { get; set; }
     public Guid FilmSessionId { get; set; }
-    public SeatNumber SeatNumber { get; set; }
+    public decimal Price { get; set; }
+    public List<string> SelectedSeats { get; set; }
+
 
     public class CreateTicketCommandHandler : IRequestHandler<CreateTicketCommand, CreatedTicketResponse>
     {
@@ -36,11 +38,11 @@ public class CreateTicketCommand : IRequest<CreatedTicketResponse>
         public async Task<CreatedTicketResponse> Handle(CreateTicketCommand request, CancellationToken cancellationToken)
         {
 
-            await _ticketBusinessRules.SeatNumberCannotDuplicatedForFilmSession(request.SeatNumber);
+           await _ticketBusinessRules.SeatNumberCannotDuplicatedForFilmSession(request.SelectedSeats,request.FilmSessionId);
+
             Customer customer=await _ticketBusinessRules.CustomerIsExist(request.FirstName,request.LastName,request.PhoneNumber);
 
             Ticket ticket = _mapper.Map<Ticket>(request);
-            ticket.CustomerId = customer.Id;
 
             await _ticketRepository.AddAsync(ticket);
 

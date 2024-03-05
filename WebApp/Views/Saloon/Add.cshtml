@@ -1,0 +1,16 @@
+﻿@using Application.Features.Saloons.Commands.Create;
+@model CreateSaloonCommand;
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="card-header text-center"><h2>Salon Ekle</h2></div>
+<div class="col-md-3">
+    <form method="post" action="Add" enctype="application/x-www-form-urlencoded">
+        <label for="Name">Salon Adı</label>
+        <input type="text" class="form-control" name="Name" />
+        <button class="btn btn-primary float-right mt-2">Ekle</button>
+    </form>
+
+</div>

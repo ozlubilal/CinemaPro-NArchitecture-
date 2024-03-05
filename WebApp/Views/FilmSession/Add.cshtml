@@ -1,0 +1,35 @@
+﻿@using Application.Features.FilmSessions.Commands.Create;
+@model CreateFilmSessionCommand;
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="card-header text-center"><h2>Film Seansı Ekle</h2></div>
+<div class="col-md-3">
+    <form action="Add" method="post" enctype="application/x-www-form-urlencoded">
+        <label for="FilmId">Film Adı</label>
+        <select class="form-control" name="FilmId">
+            @foreach (var film in ViewBag.Films.Items)
+            {
+                <option value="@film.Id">@film.Name</option>
+            }
+        </select>
+        <label for="SaloonId">Salon Adı</label>
+        <select class="form-control" name="SaloonId">
+            @foreach (var saloon in ViewBag.Saloons.Items)
+            {
+                <option value="@saloon.Id">@saloon.Name</option>
+            }
+        </select>
+        <label for="Price">Fiyat</label>
+        <input class="form-control"  type="text" name="Price" />
+        <label for="FilmSessionDateTime">Tarih</label>
+        <input type="date" class="form-control" asp-for="FilmSessionDate" />
+        <label for="StartTime">Başlangıç Saati</label>
+        <input type="time" class="form-control" asp-for="StartTime" />
+        <label for="EndTime">Bitiş Saati</label>
+        <input type="time" class="form-control" asp-for="EndTime" />
+        <button class="btn btn-primary float-right mt-2" type="submit">Kaydet</button>
+    </form>
+</div>

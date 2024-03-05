@@ -15,8 +15,12 @@ namespace Application.Features.Tickets.Commands.Update;
 public class UpdateTicketCommand : IRequest<UpdatedTicketResponse>
 {
     public Guid Id { get; set; }
-    public FilmSession FilmSession { get; set; }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+    public string PhoneNumber { get; set; }
+    public Guid FilmSessionId { get; set; }
     public SeatNumber SeatNumber { get; set; }
+
 
     public class UpdateTicketCommandHandler : IRequestHandler<UpdateTicketCommand, UpdatedTicketResponse>
     {

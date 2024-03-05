@@ -33,14 +33,14 @@ public class GetListByDynamicTicketQuery: IRequest<GetListResponse<GetListByDyna
 
         public async Task<GetListResponse<GetListByDynamicTicketListItemDto>> Handle(GetListByDynamicTicketQuery request, CancellationToken cancellationToken)
         {
-            Paginate<Ticket> tickets =await _ticketRepository.GetListByDynamicAsync(
+            Paginate<Ticket> tickets = await _ticketRepository.GetListByDynamicAsync(
                 request.DynamicQuery,
-                include:t=>t.Include(t=>t.FilmSession).ThenInclude(fs=>fs.Film).
-                Include(t=>t.FilmSession).ThenInclude(fs=>fs.Saloon).
-                Include(t=>t.Customer),
-                index:request.PageRequest.PageIndex,
-                size:request.PageRequest.PageSize
-                );
+                include: t => t.Include(t => t.FilmSession).ThenInclude(fs => fs.Film)
+                .Include(t => t.FilmSession).ThenInclude(fs => fs.Saloon),
+                index: request.PageRequest.PageIndex,
+                size: request.PageRequest.PageSize
+            );
+
 
             GetListResponse<GetListByDynamicTicketListItemDto> response = _mapper.Map<GetListResponse<GetListByDynamicTicketListItemDto>>(tickets);
 

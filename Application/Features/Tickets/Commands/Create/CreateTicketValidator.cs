@@ -15,6 +15,6 @@ public class CreateTicketValidator:AbstractValidator<CreateTicketCommand>
         RuleFor(t => t.LastName).NotEmpty();
         RuleFor(t => t.PhoneNumber).NotEmpty();
         RuleFor(t => t.FilmSessionId).NotEmpty();
-        RuleFor(t => t.SeatNumber).NotEmpty();
+        //RuleFor(t => t.SeatNumber).NotEmpty();
     }
 }

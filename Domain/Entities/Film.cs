@@ -10,6 +10,7 @@ namespace Domain.Entities;
 public class Film:Entity<Guid>
 {
     public string  Name { get; set; }
+    public string ImageUrl { get; set; }
     public Film()
     {
         

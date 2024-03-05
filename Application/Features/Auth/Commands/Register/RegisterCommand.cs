@@ -57,6 +57,7 @@ public class RegisterCommand : IRequest<RegisteredDto>
 
             RegisteredDto registeredDto = new()
             {
+                UserId= createdUser.Id,
                 RefreshToken = addedRefreshToken,
                 AccessToken = createdAccessToken,
             };

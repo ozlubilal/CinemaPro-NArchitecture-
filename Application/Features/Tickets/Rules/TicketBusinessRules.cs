@@ -1,5 +1,6 @@
 ﻿using Application.Features.Tickets.Constants;
 using Application.Services.Repositories;
+using Core.Application.Responses;
 using Core.Application.Rules;
 using Core.CrossCuttingConcerns.Exceptions.Types;
 using Domain.Entities;
@@ -12,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Tickets.Rules;
 
-public class TicketBusinessRules: BaseBusinessRules
+public class TicketBusinessRules : BaseBusinessRules
 {
     private readonly ITicketRepository _ticketRepository;
     private readonly ICustomerRepository _customerRepository;
@@ -23,21 +24,28 @@ public class TicketBusinessRules: BaseBusinessRules
         _customerRepository = customerRepository;
     }
 
-    public async Task SeatNumberCannotDuplicatedForFilmSession(SeatNumber seatNumber)
+    public async Task SeatNumberCannotDuplicatedForFilmSession(List<string> selectedSeats, Guid filmSessionId)
     {
-        Ticket? result = await _ticketRepository.GetAsync(predicate: t => t.SeatNumber == seatNumber);
+        IList<Ticket?> result = (await _ticketRepository.GetListAsync(predicate: t => t.FilmSessionId == filmSessionId)).Items;
 
         if (result != null)
         {
-            throw new BusinessException(TicketMessages.TicketOfSeatNumberExist);
+            var allSelectedseats = result.SelectMany(ticket => ticket.SelectedSeats).ToList();
+
+            var duplicatedSeat = selectedSeats.Any(seat => allSelectedseats.Any(seat2=>seat2.Contains(seat)));
+
+            if (duplicatedSeat)
+            {
+                throw new BusinessException(TicketMessages.TicketOfSeatNumberExist);
+            }
         }
     }
-    public  async Task<Customer> CustomerIsExist(string firstName,string lastName,string phoneNumber)
+    public async Task<Customer> CustomerIsExist(string firstName, string lastName, string phoneNumber)
     {
         //customer varsa mevcut customer döndürüyoruz, yoksa yeni bir customer oluşturup onu döndürüyoruz
-        Customer? customer = await _customerRepository.GetAsync(predicate:c=>c.FirstName==firstName&&c.LastName==lastName&&c.PhoneNumber==phoneNumber);
+        Customer? customer = await _customerRepository.GetAsync(predicate: c => c.FirstName == firstName && c.LastName == lastName && c.PhoneNumber == phoneNumber);
 
-        if(customer != null)
+        if (customer != null)
         {
             return customer;
         }
@@ -49,11 +57,11 @@ public class TicketBusinessRules: BaseBusinessRules
                 LastName = lastName,
                 PhoneNumber = phoneNumber
             };
-          
+
             await _customerRepository.AddAsync(customer1);
             return customer1;
         }
-        
+
     }
 
 }

@@ -12,15 +12,11 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Films.Commands.Delete;
 
-public class DeleteFilmCommand : IRequest<DeletedFilmResponse>, ICacheRemoverRequest
+public class DeleteFilmCommand : IRequest<DeletedFilmResponse>
 {
     public Guid Id { get; set; }
 
-    public string? CacheKey => "";
-
-    public bool BypassCache => false;
-
-    public string? CacheGroupKey => "GetFilms";
+   
 
     public class DeleteFilmCommandHandler : IRequestHandler<DeleteFilmCommand, DeletedFilmResponse>
     {

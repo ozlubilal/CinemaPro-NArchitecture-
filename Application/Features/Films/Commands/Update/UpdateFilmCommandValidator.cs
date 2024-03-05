@@ -11,6 +11,6 @@ public class UpdateFilmCommandValidator:AbstractValidator<UpdateFilmCommand>
 {
     public UpdateFilmCommandValidator()
     {
-        RuleFor(f => f.Name).NotEmpty();
+        //RuleFor(f => f.Name).NotEmpty();
     }
 }

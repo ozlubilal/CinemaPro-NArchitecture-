@@ -1,0 +1,28 @@
+﻿@using Core.Security.Dtos;
+@model UserForRegisterDto;
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="card-header text-center"><h2>Kullanıcı Ekle</h2></div>
+<div class="col-md-3">
+    <form method="post" action="Add" enctype="application/x-www-form-urlencoded">
+        <label for="FirstName">Ad</label>
+        <input class="form-control" type="text" name="FirstName" />
+        <label for="LastName">Soyad</label>
+        <input class="form-control" type="text" name="LastName" />
+        <label for="Email">Email</label>
+        <input class="form-control" type="text" name="Email" />
+        <label for="OperationClaimName">Rol</label>
+        <select class="form-control">
+            @foreach(var item in  ViewBag.OperationClaims)
+            {
+                <option> @item.Name</option>
+            }
+        </select>
+        <label for="Password">Parola</label>
+        <input class="form-control" type="text" name="Password" />
+        <button class="btn btn-primary float-right mt-2" type="submit">Kaydet</button>
+    </form>
+</div>

@@ -12,16 +12,11 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Films.Commands.Update;
 
-public class UpdateFilmCommand : IRequest<UpdatedFilmResponse>, ICacheRemoverRequest
+public class UpdateFilmCommand : IRequest<UpdatedFilmResponse>
 {
     public Guid Id { get; set; }
     public string Name { get; set; }
 
-    public string? CacheKey => "";
-
-    public bool BypassCache => false;
-
-    public string? CacheGroupKey => "GetFilms";
 
     public class UpdateFilmCommandHandler : IRequestHandler<UpdateFilmCommand, UpdatedFilmResponse>
     {

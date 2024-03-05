@@ -1,0 +1,29 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>_UserLayout</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="">
+    <div class="text-center bg-dark p-1 pt-0">
+        <button class="btn btn-warning px-3 mx-2" onclick="window.location.href='@Url.Action("Index","UserHome")'">Bugün</button>
+        <button class="btn btn-warning px-3 mx-2" onclick="window.location.href = '@Url.Action("Index", "UserFilm")'">Filmler</button>
+        <button class="btn btn-warning px-3 mx-2" onclick="window.location.href = '@Url.Action("GetList", "UserTicket")'">Biletler</button>
+
+    </div>
+    <div class="card-body p-0 mt-0 bg-secondary" style="min-height:700px;">
+        @RenderBody()
+    </div>
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="path/to/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

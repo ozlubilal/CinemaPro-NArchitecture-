@@ -1,0 +1,51 @@
+﻿@using Application.Features.FilmSessions.Queries.GetList;
+@using Core.Application.Responses;
+
+@model GetListResponse<GetListFilmSessionListItemDto>;
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@{
+    int rowCount = 0;
+}
+@ViewBag.x
+<div class="card-header text-center"><h2>Film Seansları</h2></div>
+<div class="">
+    <button class="btn btn-success" onclick="window.location.href='@Url.Action("Add","FilmSession")'">Yeni Seans Ekle</button>
+    <table class="table">
+        <thead>
+            <tr>
+                <th></th>
+                <th></th>
+                <th>Film Adı</th>
+                <th>Salon Adı</th>
+                <th>Tarih</th>
+                <th>Başlama Saati</th>
+                <th>Bitiş Saati</th>
+                <th>Fiyat</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var item in Model.Items)
+            {
+                <tr>
+                    <td> @{rowCount++;}  @rowCount</td>
+                    <td><img src="@item.ImageUrl" width="50" /></td>
+                    <td>@item.FilmName</td>
+                    <td>@item.SaloonName</td>
+                    <td>@item.FormattedDate</td>
+                    <td>@item.StartTime.ToString("hh\\:mm")</td>
+                    <td>@item.EndTime.ToString("hh\\:mm")</td>
+                    <td>@item.Price</td>
+                    <td><button class="btn btn-sm btn-warning" onclick="window.location.href='@Url.Action("Update","FilmSession",new {id=item.Id})'">Güncelle</button></td>
+                    <td><button class="btn btn-sm btn-danger" onclick="window.location.href='@Url.Action("Delete","FilmSession", new {id=item.Id})'">Sil</button></td>
+                </tr>
+            }            
+        </tbody>
+
+
+    </table>
+</div>

@@ -6,6 +6,7 @@ using Core.Security.Entities;
 using Core.Security.Hashing;
 using Core.Security.Jwt;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,7 +34,8 @@ public class LoginCommand : IRequest<LoginedDto>
 
         public async Task<LoginedDto> Handle(LoginCommand request, CancellationToken cancellationToken)
         {
-            var userToCheck = await _userRepository.GetAsync(predicate: u => u.Email == request.UserForLoginDto.Email);
+            var userToCheck = await _userRepository.GetAsync(predicate: u => u.Email == request.UserForLoginDto.Email,
+                include:u=>u.Include(u=>u.UserOperationClaims));
             if (userToCheck == null)
             {
                 throw new Exception("Kullanıcı Bulunamadı");
@@ -49,6 +51,7 @@ public class LoginCommand : IRequest<LoginedDto>
 
             LoginedDto loginedDto = new()
             {
+               OperationClaimId=userToCheck.UserOperationClaims.FirstOrDefault().OperationClaimId,
                 RefreshToken = addedRefreshToken,
                 AccessToken = createdAccessToken,
             };

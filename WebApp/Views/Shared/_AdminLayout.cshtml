@@ -1,0 +1,88 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Admin Panel</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <style>
+        /* Adjust the sidebar and content area */
+        .sidebar {
+            height: 100%;
+            width: 250px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #0F172A;
+            padding-top: 50px;
+        }
+
+        .content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+
+        .sidebarTop{
+            height:200px;
+            background-color: #0F172A;
+            margin-top:0;
+            padding-top:0;
+        }
+
+        .nav-item {           
+            padding: 5px; /* Örnek: Dolgu alanı */
+        }
+
+        .nav-link {
+            color: #888C96;
+        }
+        .nav-item:hover{
+                color:blue;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar mt-0 pt-0">
+        <div class="sidebarTop d-flex justify-content-center align-items-center">
+            <img src="~/images/logo.jpg" width="150" height="150" />
+        </div>
+        <div class="mt-1 border-bottom"></div>
+        <div class="sidebarBottom mt-2">
+        
+        <ul class="nav flex-column">           
+            <li class="nav-item">
+                <a class="nav-link" href="/User/GetList">Users</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/Film/GetList">Filmler</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/FilmSession/GetList">FilmSeansları</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/Saloon/GetList">Salonlar</a>
+            </li>
+        </ul>
+        </div>
+    </div>
+
+    <!-- Page Content -->
+    <div class="content bg-light p-0 mt-0 ">
+        @RenderBody()
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="path/to/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

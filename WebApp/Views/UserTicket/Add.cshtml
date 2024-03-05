@@ -1,0 +1,215 @@
+﻿@using Application.Features.Tickets.Commands.Create;
+@model CreateTicketCommand;
+
+@{
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cinema Seats</title>
+    <style>
+        .seat {
+            width: 50px;
+            height: 50px;
+            background-color: #ccc;
+            margin: 2px;
+            text-align: center;
+            line-height: 50px;
+            float: left;
+            cursor: pointer; /* Koltukları seçilebilir hale getirir */
+        }
+
+        .selected {
+            background-color:orange !important; /* Seçilen koltukların rengi */
+            color: white; /* Seçilen koltuk numaralarının rengi */
+        }
+
+        .seat-container {
+            display: flex;
+            flex-direction: column;
+            margin-left: 20px;
+        }
+
+        .details-container {
+            margin-left: 20px;
+        }
+
+        .selected-seats {
+            margin-top: 20px;
+        }
+
+        .selected-seat {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background-color:orange; /* Seçilen koltuk numaralarının arkaplan rengi */
+            color: white; /* Seçilen koltuk numaralarının rengi */
+            text-align: center;
+            line-height: 30px;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+
+        .form-group label {
+            font-family:'Comic Sans MS';
+        }
+
+        .non-selectable {
+            background-color: #dc3545 !important; /* Seçilemeyen koltukların arkaplan rengi */
+            color: white !important; /* Seçilemeyen koltuk numaralarının rengi */
+            cursor: not-allowed; /* Mouse'un üzerine gelince izleyeceği imleç tipi */
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="pt-2">
+
+        @*üst Bölüm*@
+        <div class="p-3 bg-light">
+            <div style="display: flex;">
+                <img src="@ViewBag.filmSession.ImageUrl" style="width: 100px; height: 150px; margin-right: 20px;" class="card-img-top" alt="...">
+                <div class="col-md-2">
+                    <p class="card-text"><strong>@ViewBag.filmSession.FilmName</strong></p>
+                    <p class="card-text">@ViewBag.filmSession.SaloonName</p>
+                    <p class="card-text">@ViewBag.filmSession.FormattedDate,  <strong>@ViewBag.filmSession.FormattedStartTime </strong></p>
+                </div>
+                <div class=" col-md-3">
+                    <strong>Seçtiğiniz koltuklar:</strong>
+                    <div class="selected-seats">
+                        <span id="selectedSeats"></span>
+                    </div>
+                </div>
+                <div class="">
+                    
+                    <form method="post" action="/UserTicket/Add" class="row">
+                        @Html.HiddenFor(model => model.SelectedSeats, new { id = "selectedSeatsInput" })
+                        <input type="hidden" name="FilmSessionId" id="filmSessionIdInput" value="@ViewBag.filmSession.Id" />
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="firstName">İsim:</label>
+                                <input type="text" class="form-control" id="firstName" name="firstName" />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="lastName">Soyisim:</label>
+                                <input type="text" class="form-control" id="lastName" name="lastName" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="phoneNumber">Telefon Numarası:</label>
+                                <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" />
+                            </div>
+                            <div class="form-group">
+                                <input type="hidden" class="form-control" id="pricePerSeat" name="pricePerSeat" value="@ViewBag.filmSession.Price" />
+                            </div>
+                            <div class="form-group">
+                                <label class="" for="price">Toplam Fiyat:</label>                               
+                                 <input type="text" class="form-control text-danger" id="price" name="price" />
+                            </div>
+                        </div>
+
+                        <div class="col-12">                            
+                            <button type="submit" class="btn btn-primary float-end">Bilet Ekle</button>
+                        </div>
+                    </form>
+                  
+
+
+                </div>
+            </div>
+        </div>
+        @*Koltuk numaraları*@
+        <div class="container">
+            <div class="row justify-content-center">
+               
+            </div>
+        </div>
+    </div>
+   
+
+    <script>
+        var selectedSeats = []; // Seçilen koltuk numaralarını tutacak dizi
+        var nonSelectableSeats = @Html.Raw(Json.Serialize(ViewBag.NonSelectableSeats)); // Razor syntax ile ViewBag.NonSelectableSeats'i JavaScript dizisine dönüştür
+     
+
+     
+        function updatePrice() {
+            var pricePerSeat = parseFloat(document.getElementById('pricePerSeat').value); // Koltuk başına fiyatı al
+            var totalPrice = pricePerSeat * selectedSeats.length; // Toplam fiyatı hesapla
+            var formattedPrice = totalPrice.toLocaleString('tr-TR', { minimumFractionDigits: 2 }); // Türk Lirası biçiminde iki ondalık hane ile formatla
+            document.getElementById('price').value = formattedPrice; // Fiyatı güncelle
+        }
+
+        function updateHiddenInput() {
+            var hiddenInput = document.getElementById('selectedSeatsInput');
+            hiddenInput.value = selectedSeats.join(','); // Seçilen koltuk numaralarını virgülle ayırarak gizli alana atar
+        }
+
+        function updateSelectedSeats() {
+            var selectedSeats = document.querySelectorAll('.selected');
+            var selectedSeatsDiv = document.querySelector('.selected-seats');
+            selectedSeatsDiv.innerHTML = ''; // Önceki seçilen koltukları temizle
+            selectedSeats.forEach(function (seat) {
+                var seatNumber = seat.textContent;
+                var seatDiv = document.createElement('div');
+                seatDiv.className = 'selected-seat';
+                seatDiv.textContent = seatNumber;
+                selectedSeatsDiv.appendChild(seatDiv);
+            });
+        }
+     
+       
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var seatsContainer = document.querySelector('.row.justify-content-center');
+            for (var i = 1; i <= 70; i++) {
+                var seatDiv = document.createElement('div');
+                seatDiv.className = 'col-auto mb-1';
+                var seat = document.createElement('div');
+                seat.className = 'seat bg-light text-center';
+                seat.style.lineHeight = '50px';
+                seat.textContent = i;
+                var selectable = !nonSelectableSeats.includes(String(i));
+                seat.dataset.selectable = selectable; // Koltuğun seçilebilir olup olmadığını veri özelliği olarak ekliyoruz
+                seat.addEventListener('click', function () {
+                    toggleSeat(this);
+                });
+                if (!selectable) {
+                    seat.classList.add('non-selectable');
+                    seat.style.backgroundColor = "#dc3545"; // Kırmızı arka plan rengi
+                    seat.style.color = "white"; // Beyaz renkte yazı
+                }
+                seatDiv.appendChild(seat);
+                seatsContainer.appendChild(seatDiv);
+            }
+        });
+
+        function toggleSeat(seat) {
+            var isSelectable = seat.dataset.selectable === "true"; // Koltuğun seçilebilir olup olmadığını kontrol ediyoruz
+            if (isSelectable) {
+                seat.classList.toggle('selected'); // Seçilebilir koltuklarda rengi değiştir
+                var seatNumber = seat.textContent;
+                var index = selectedSeats.indexOf(seatNumber);
+                if (index !== -1) {
+                    selectedSeats.splice(index, 1); // Koltuk numarasını seçilenler listesinden kaldırır
+                } else {
+                    selectedSeats.push(seatNumber); // Koltuk numarasını seçilenler listesine ekler
+                }
+                updateSelectedSeats();
+                updateHiddenInput();
+                updatePrice();
+            } else {
+                alert("Bu koltuk seçilemez!"); // Kullanıcıya seçilemeyen koltuk hakkında uyarı ver
+            }
+        }
+    </script>
+
+</body>
+</html>

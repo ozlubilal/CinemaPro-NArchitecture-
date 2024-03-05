@@ -1,0 +1,36 @@
+﻿@using Application.Features.Saloons.Queries.GetList;
+@using Core.Application.Responses;
+@model GetListResponse<GetListSaloonListItemDto>;
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@{
+    int rowCount = 0;
+}
+
+<div class="card-header text-center"><h2>Salonlar</h2></div>
+<button class="btn btn-success" onclick="window.location.href='@Url.Action("Add","Saloon")'">Yeni Salon Ekle</button>
+<div class="col-md-8">
+    <table class="table">
+        <thead>
+            <tr>
+            <th></th>
+            <th>Salon Adı</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var item in Model.Items)
+            {
+                <tr>
+                    <td>@{rowCount++;} @rowCount</td>
+                    <td>@item.Name</td>
+                    <td><button class="btn btn-warning btn-sm" onclick="window.location.href='@Url.Action("Update","Saloon",new{id=item.Id})'">Güncelle</button></td>
+                    <td><button class="btn btn-danger btn-sm" onclick="window.location.href='@Url.Action("Delete","Saloon", new{id=item.Id})'">Sil</button></td>
+                </tr>
+            }
+           
+        </tbody>
+    </table>
+
+</div>

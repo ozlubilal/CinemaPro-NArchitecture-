@@ -8,5 +8,5 @@ namespace Application.Features.Auth.Dtos;
 
 public class RegisteredDto : RefreshedTokenDto
 {
-    //
+    public int UserId { get; set; }
 }

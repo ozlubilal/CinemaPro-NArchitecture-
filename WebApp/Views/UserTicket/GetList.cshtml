@@ -1,0 +1,99 @@
+﻿@using Application.Features.Tickets.Queries.GetList;
+@using Core.Application.Responses;
+@model GetListResponse<GetListTicketListItemDto>
+
+@{
+    Layout = "~/Views/Shared/_UserLAyout.cshtml";
+}
+<style>
+    /* Satırın arka plan rengini değiştirmek için */
+    tbody tr:hover {
+        background-color: #f8f9fa; /* Hover olduğunda arka plan rengi */
+    }
+</style>
+<div class="col-md-12">
+<div class="row pt-2">
+        <div class="card mx-4 col-md-2 bg-light">
+            <div class="input-group mt-3 justify-content-end">
+                <button onclick="window.location.href='@Url.Action("GetList","UserTicket")'" class="btn btn-sm btn-secondary">Temizle</button>
+            </div>
+            <form method="post" action="/UserTicket/GetList">
+                <div class="input-group mt-3">
+                    <input name="FirstName" type="text" value="@(!string.IsNullOrEmpty(ViewBag.getListTicketDto?.FirstName) ? ViewBag.getListTicketDto.FirstName : "")" class="form-control" placeholder="Ad ara..." aria-label="Ad ara..." aria-describedby="button-addon2">
+                </div>
+                <div class="input-group mt-3">
+                    <input name="LastName" type="text" class="form-control" value="@(!string.IsNullOrEmpty(ViewBag.getListTicketDto?.LastName) ? ViewBag.getListTicketDto.LastName : "")" placeholder="Soyad ara..." aria-label="Soyad ara..." aria-describedby="button-addon2">
+                </div>
+                <div class="input-group mt-3">
+                    <input name="FilmName" type="text" class="form-control" value="@(!string.IsNullOrEmpty(ViewBag.getListTicketDto?.FilmName) ? ViewBag.getListTicketDto.FilmName : "")" placeholder="Film Adı ara..." aria-label="Film Adı ara..." aria-describedby="button-addon2">
+                </div>
+                <div class="input-group mt-3">
+                    <input name="FilmSessionDate" type="date"  class="form-control" aria-label="Film Tarih ara..." aria-describedby="button-addon2">
+                </div>
+                <div class="input-group mt-3">
+                    <input name="StartTime" type="time" class="form-control" aria-label="Başlangıç Zamanı ara..." aria-describedby="button-addon2">
+                </div>
+                <div class="input-group mt-3">
+                </div>
+                <div class="input-group mt-3">
+                    <input name="SaloonName" type="text" class="form-control" value="@(!string.IsNullOrEmpty(ViewBag.getListTicketDto?.SaloonName) ? ViewBag.getListTicketDto.SaloonName : "")" placeholder="Salon Adı ara..." aria-label="Salon Adı ara..." aria-describedby="button-addon2">
+                </div>
+               
+                <div class="input-group mt-3 ">
+                    <button type="submit" class="btn btn-primary">Filtrele</button>                   
+                </div>
+            </form>
+         
+        </div>
+
+
+
+    <div class="col-md-9 mx-3"> 
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">Bilet Listesi</div>
+
+                    <div class="card-body ">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Ad</th>
+                                    <th>Soyad</th>
+                                    <th>Film Adı</th>
+                                    <th>Seçilen Koltuklar</th>
+                                    <th>Salon Adı</th>
+                                    <th>Film Tarihi</th>
+                                    <th>Film Saati</th>
+                                    <th>Fiyat</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var ticket in Model.Items)
+                                {
+                                    <tr>
+                                        <td>@ticket.FirstName</td>
+                                        <td>@ticket.LastName</td>
+                                        <td>@ticket.FilmName</td>
+                                        <td>
+                                            @foreach (var seat in ticket.SelectedSeats)
+                                            {
+                                                <span>@seat </span>
+                                               
+                                            }
+                                        </td>
+                                        <td>@ticket.SaloonName</td>
+                                        <td>@ticket.FilmSessionDate.ToString("dd/MM/yyyy")</td>
+                                        <td>@ticket.StartTime.ToString("hh\\:mm")</td>
+                                        <td>@ticket.Price</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

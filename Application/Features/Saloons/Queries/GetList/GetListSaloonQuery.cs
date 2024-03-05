@@ -33,7 +33,7 @@ public class GetListSaloonQuery:IRequest<GetListResponse<GetListSaloonListItemDt
                 index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize,
                 cancellationToken: cancellationToken,
-                withDeleted: true
+                withDeleted: false
                 );
             GetListResponse<GetListSaloonListItemDto> response=_mapper.Map<GetListResponse<GetListSaloonListItemDto>>(saloons);
             return response;

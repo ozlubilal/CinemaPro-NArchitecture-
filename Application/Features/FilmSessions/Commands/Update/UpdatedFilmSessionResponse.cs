@@ -12,6 +12,10 @@ public class UpdatedFilmSessionResponse
     public string FilmName { get; set; }
     public string SaloonName { get; set; }
     public decimal Price { get; set; }
-    public DateTime SessionDateTime { get; set; }
-
+    public DateTime SessionDate { get; set; }
+    public TimeSpan StartTime { get; set; }
+    public TimeSpan EndTime { get; set; }
 }
+
+
+

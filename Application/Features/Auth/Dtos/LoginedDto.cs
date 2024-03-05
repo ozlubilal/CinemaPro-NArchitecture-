@@ -8,5 +8,5 @@ namespace Application.Features.Auth.Dtos;
 
 public class LoginedDto : RefreshedTokenDto
 {
-
+    public int OperationClaimId { get; set; }
 }

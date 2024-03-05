@@ -14,9 +14,9 @@ namespace Application.Features.FilmSessions.Commands.Create
         {
             RuleFor(f => f.SaloonId).NotEmpty();
             RuleFor(f=>f.FilmId).NotEmpty();
-            RuleFor(f=>f.FilmSessionDateTime).NotEmpty();
+            RuleFor(f=>f.FilmSessionDate).NotEmpty();
             RuleFor(f => f.Price).NotEmpty().GreaterThan(0);
-            RuleFor(f => f.FilmSessionDateTime).Must(BeAfterToday).WithMessage(FilmSessionMessages.FilmSessionDateCannotBeforeToday);
+            RuleFor(f => f.FilmSessionDate).Must(BeAfterToday).WithMessage(FilmSessionMessages.FilmSessionDateCannotBeforeToday);
 
 
 

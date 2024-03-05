@@ -32,8 +32,7 @@ public class GetListTicketQuery:IRequest<GetListResponse<GetListTicketListItemDt
         {
             Paginate<Ticket> tickets =await  _ticketRepository.GetListAsync(
                 include:t=>t.Include(t=>t.FilmSession).ThenInclude(fs => fs.Film).
-                Include(t => t.FilmSession).ThenInclude(fs => fs.Saloon).
-                Include(t=>t.Customer),
+                Include(t => t.FilmSession).ThenInclude(fs => fs.Saloon),
                 index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize
                 );

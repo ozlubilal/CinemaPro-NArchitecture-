@@ -1,0 +1,26 @@
+﻿@using Application.Features.Films.Commands.Create;
+@model CreateFilmCommand;
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<div class="card-header text-center">
+    <h2>Film Ekle</h2>
+</div>
+<div class="mt-5 col-md-3">
+    <form method="post" asp-action="Add" enctype="multipart/form-data">
+        <label for="name">Film Adı</label>
+        <input class="form-control" type="text" name="name" />
+
+        <label for="image">Film Resmi</label>
+        <input class="form-control-file" type="file" name="image" accept="image/*" />
+
+        <button class="btn btn-primary float-right mt-2" type="submit">Kaydet</button>
+    </form>
+</div>
+
+
+
+

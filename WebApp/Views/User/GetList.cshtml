@@ -1,0 +1,46 @@
+﻿@using Application.Features.Users.Queries.GetList;
+@using Core.Application.Responses;
+
+@model GetListResponse<GetListUserListItemDto>;
+
+@{
+    Layout = "~/Views/Shared/_AdminLAyout.cshtml";
+}
+@{
+    int rowCount = 0;
+}
+<div class="caed-header text-center"><h2>Kullanıcılar</h2></div>
+<div class="">
+    <button class="btn btn-success" onclick="window.location.href='@Url.Action("Add","User")'">Yeni Kullanıcı Ekle</button>
+    <table class="table">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Ad</th>
+                <th>Soyad</th>
+                <th>Email</th>
+                <th>Rol</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Items)
+            {
+                <tr>
+                    <td> @{
+                            rowCount++;
+                        }  @rowCount</td>
+                    <td>@item.FirstName</td>
+                    <td>@item.LastName</td>
+                    <td>@item.Email</td>
+                    <td>@item.OperationClaimName</td>
+                    <td><button class="btn btn-sm btn-warning" onclick="window.location.href='@Url.Action("Update","User",new {id=item.Id})'">Güncelle</button></td>
+                    <td><button class="btn btn-sm btn-danger" onclick="window.location.href='@Url.Action("Delete","User", new {id=item.Id})'">Sil</button></td>
+                </tr>
+            }
+        </tbody>
+
+
+    </table>
+</div>

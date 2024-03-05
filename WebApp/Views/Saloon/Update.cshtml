@@ -1,0 +1,18 @@
+﻿@using Application.Features.Saloons.Commands.Update;
+@model UpdateSaloonCommand;
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="card-header text-center"><h2>Saloon Güncelle</h2></div>
+<div class="mt-5 col-md-3 ">
+    <form method="post" action="Update" enctype="application/x-www-form-urlencoded">
+        <input class="form-control" type="hidden" value="@Model.Id" name="Id" />
+        <label for="Name">Saloon Adı</label>
+        <input class="form-control" type="text" value="@Model.Name" name="Name" />
+        <button class="btn btn-primary float-end mt-2" type="submit">Güncelle</button>
+    </form>
+</div>
+
+

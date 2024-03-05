@@ -11,8 +11,10 @@ public class GetListByDynamicTicketListItemDto
 {
     public string FirstName { get; set; }
     public string LastName { get; set; }
-    public string FilmName { get; set; }
-    public SeatNumber SeatNumber { get; set; }
+    public string FilmName { get; set; } 
+    public DateTime FilmSessionDate { get; set; }
+    public TimeSpan StartTime { get; set; }
+    public List<string> SelectedSeats { get; set; }
     public string SaloonName { get; set; }
     public decimal Price { get; set; }
 }

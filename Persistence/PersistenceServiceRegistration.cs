@@ -26,7 +26,7 @@ public static class PersistenceServiceRegistration
         services.AddScoped<ITicketRepository,TicketRepository>();
         services.AddScoped<ISaloonRepository,SaloonRepository>();
 
-
+      
         services.AddScoped<IAuthService, AuthManager>();
       //  services.AddScoped<IEmailAuthenticatorRepository, EmailAuthenticatorRepository>();
         services.AddScoped<IOperationClaimRepository, OperationClaimRepository>();

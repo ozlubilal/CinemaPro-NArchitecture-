@@ -32,17 +32,17 @@ namespace Application.Features.Tickets.Profiles
             CreateMap<Ticket, GetListTicketListItemDto>()
             .ForMember(destinationMember: c => c.FilmName, memberOptions: opt => opt.MapFrom(c => c.FilmSession.Film.Name))
             .ForMember(destinationMember: c => c.SaloonName, memberOptions: opt => opt.MapFrom(c => c.FilmSession.Saloon.Name))
-            .ForMember(destinationMember: c => c.FirstName, memberOptions: opt => opt.MapFrom(c => c.Customer.FirstName))
-            .ForMember(destinationMember: c => c.LastName, memberOptions: opt => opt.MapFrom(c => c.Customer.LastName))
             .ForMember(destinationMember: c => c.Price, memberOptions: opt => opt.MapFrom(c => c.FilmSession.Price))
+            .ForMember(destinationMember:c=>c.FilmSessionDate, memberOptions:opt=>opt.MapFrom(c=>c.FilmSession.FilmSessionDate))
+            .ForMember(destinationMember:c=>c.StartTime, memberOptions:opt=>opt.MapFrom(c=>c.FilmSession.StartTime))
             .ReverseMap();
 
             CreateMap<Ticket, GetListByDynamicTicketListItemDto>()
            .ForMember(destinationMember: c => c.FilmName, memberOptions: opt => opt.MapFrom(c => c.FilmSession.Film.Name))
            .ForMember(destinationMember: c => c.SaloonName, memberOptions: opt => opt.MapFrom(c => c.FilmSession.Saloon.Name))
-           .ForMember(destinationMember: c => c.FirstName, memberOptions: opt => opt.MapFrom(c => c.Customer.FirstName))
-           .ForMember(destinationMember: c => c.LastName, memberOptions: opt => opt.MapFrom(c => c.Customer.LastName))
            .ForMember(destinationMember: c => c.Price, memberOptions: opt => opt.MapFrom(c => c.FilmSession.Price))
+            .ForMember(destinationMember: c => c.FilmSessionDate, memberOptions: opt => opt.MapFrom(c => c.FilmSession.FilmSessionDate))
+            .ForMember(destinationMember: c => c.StartTime, memberOptions: opt => opt.MapFrom(c => c.FilmSession.StartTime))
            .ReverseMap();
 
             CreateMap<Paginate<Ticket>, GetListResponse<GetListTicketListItemDto>>().ReverseMap();

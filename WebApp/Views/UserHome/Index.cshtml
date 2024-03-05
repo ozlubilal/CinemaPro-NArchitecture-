@@ -1,0 +1,27 @@
+﻿@using Application.Features.FilmSessions.Queries.GetList;
+@using Application.Features.FilmSessions.Queries.GetListByDynamic;
+@using Core.Application.Responses;
+
+@model GetListResponse<GetListByDynamicFilmSessionListItemDto>
+@{
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<div class="row mx-5 pt-3">
+    @foreach (var item in Model.Items)
+    {
+        <div class="mx-2  mb-3">           
+            <div class="card">
+                <img src="@item.ImageUrl" height="270" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title" style="height:60px; width:150px">@item.FilmName</h5>
+                    <p class="card-text">@item.SaloonName</p>
+                    <p class="card-text">Başlangıç:&nbsp;&nbsp; @item.StartTime.ToString("hh\\:mm")</p>
+                    <p class="card-text">Bitiş &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;:&nbsp;&nbsp; @item.EndTime.ToString("hh\\:mm")</p>
+                    <p class="card-text">Fiyat &nbsp; &nbsp; &nbsp; :&nbsp;&nbsp; @item.Price</p>
+                    <a href="/UserTicket/Add/@item.Id" class="btn btn-primary">Bilet Ekle</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
