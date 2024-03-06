@@ -1,6 +1,7 @@
 ﻿using Application.Features.Films.Commands.Delete;
 using Application.Services.Repositories;
 using AutoMapper;
+using Core.Application.Pipelines.Authorization;
 using Core.Application.Pipelines.Caching;
 using Domain.Entities;
 using MediatR;
@@ -12,11 +13,11 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Films.Commands.Delete;
 
-public class DeleteFilmCommand : IRequest<DeletedFilmResponse>
+public class DeleteFilmCommand : IRequest<DeletedFilmResponse>,ISecuredRequest
 {
     public Guid Id { get; set; }
 
-   
+    public string[] Roles => new string[] {"admin"};
 
     public class DeleteFilmCommandHandler : IRequestHandler<DeleteFilmCommand, DeletedFilmResponse>
     {

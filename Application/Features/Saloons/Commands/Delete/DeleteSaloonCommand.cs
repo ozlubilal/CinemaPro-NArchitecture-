@@ -1,5 +1,6 @@
 ﻿using Application.Services.Repositories;
 using AutoMapper;
+using Core.Application.Pipelines.Authorization;
 using Domain.Entities;
 using MediatR;
 using System;
@@ -10,8 +11,9 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Saloons.Commands.Delete;
 
-public class DeleteSaloonCommand:IRequest<DeletedSaloonResponse>
+public class DeleteSaloonCommand:IRequest<DeletedSaloonResponse>,ISecuredRequest
 {
+    public string[] Roles => new string[] { "admin" };
     public Guid Id { get; set; }
 
     public class DeleteSaloonCommandHandler : IRequestHandler<DeleteSaloonCommand, DeletedSaloonResponse>

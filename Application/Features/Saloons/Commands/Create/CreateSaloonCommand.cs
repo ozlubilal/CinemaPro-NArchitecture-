@@ -1,6 +1,7 @@
 ﻿using Application.Features.Saloons.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
+using Core.Application.Pipelines.Authorization;
 using Domain.Entities;
 using MediatR;
 using System;
@@ -11,8 +12,9 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Saloons.Commands.Create;
 
-public class CreateSaloonCommand:IRequest<CreatedSaloonResponse>
+public class CreateSaloonCommand:IRequest<CreatedSaloonResponse>,ISecuredRequest
 {
+    public string[] Roles => new string[] { "admin" };
     public string Name { get; set; }
 
     public class CreateSaloonCommandHandler : IRequestHandler<CreateSaloonCommand, CreatedSaloonResponse>

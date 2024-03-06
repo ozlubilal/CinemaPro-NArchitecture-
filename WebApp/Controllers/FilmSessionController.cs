@@ -25,9 +25,9 @@ public class FilmSessionController : BaseController
         _mapper = mapper;
     }
 
-    public async Task<IActionResult> GetList()
+    public async Task<IActionResult> GetList(int pageIndex=0, int pageSize=20)
     {
-        GetListFilmSessionQuery getListFilmSessionQuery = new() { PageRequest = PageRequest };
+        GetListFilmSessionQuery getListFilmSessionQuery = new() { PageRequest = new PageRequest { PageIndex = pageIndex, PageSize = pageSize } };
         GetListResponse<GetListFilmSessionListItemDto> response = await Mediator.Send(getListFilmSessionQuery);
         return View(response);
     }

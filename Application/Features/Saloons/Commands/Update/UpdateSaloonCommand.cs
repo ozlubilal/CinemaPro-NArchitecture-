@@ -1,6 +1,7 @@
 ﻿using Application.Features.Saloons.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
+using Core.Application.Pipelines.Authorization;
 using Domain.Entities;
 using MediatR;
 using System;
@@ -11,8 +12,9 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Saloons.Commands.Update;
 
-public class UpdateSaloonCommand:IRequest<UpdatedSaloonResponse> 
+public class UpdateSaloonCommand:IRequest<UpdatedSaloonResponse> ,ISecuredRequest
 {
+    public string[] Roles => new string[] { "admin" };
     public Guid Id { get; set; }
     public string Name { get; set;}
 

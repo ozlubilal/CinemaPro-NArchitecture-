@@ -1,5 +1,6 @@
 ﻿using Application.Services.Repositories;
 using AutoMapper;
+using Core.Application.Pipelines.Authorization;
 using Domain.Entities;
 using Domain.Enums;
 using MediatR;
@@ -12,8 +13,9 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Tickets.Commands.Update;
 
-public class UpdateTicketCommand : IRequest<UpdatedTicketResponse>
+public class UpdateTicketCommand : IRequest<UpdatedTicketResponse>,ISecuredRequest
 {
+    public string[] Roles => new string[] { "admin" };
     public Guid Id { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }

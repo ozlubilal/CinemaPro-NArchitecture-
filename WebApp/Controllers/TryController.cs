@@ -26,9 +26,9 @@ namespace WebApp.Controllers
 
         public async Task<IActionResult> Index()
         {
-            //Paginate<FilmSession> filmSessions = await _filmSessionRepository.GetListAsync(
-            //      index: 0,
-            //      size: 100);
+            Paginate<FilmSession> filmSessions = await _filmSessionRepository.GetListAsync(
+                  index: 0,
+                  size: 100);
 
             //for (int i = 1; i <26; i++)
             //foreach (var filmSession in filmSessions.Items)
@@ -38,11 +38,26 @@ namespace WebApp.Controllers
             //    x.Id = new Guid();
             //    await _filmSessionRepository.AddAsync(x);
             //}
-            
-     
-          
+
+               ViewBag.count=filmSessions.Count;
 
 
+
+            return View();
+        }
+        [HttpPost]
+        public async Task<ActionResult> Index(DateTime startDate, DateTime endDate)
+        {
+            //Paginate<FilmSession> filmSessions = await _filmSessionRepository.GetListAsync(
+            //      index: 0,
+            //      size: 100);
+
+            //foreach (var filmSession in filmSessions.Items)
+            //{
+            //    filmSession.FilmSessionDate = filmSession.FilmSessionDate.AddMonths(-1);
+            //    filmSession.Id = new Guid();
+            //    await _filmSessionRepository.UpdateAsync(filmSession);
+            //}
             return View();
         }
     }

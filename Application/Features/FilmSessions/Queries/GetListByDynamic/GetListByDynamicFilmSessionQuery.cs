@@ -1,5 +1,6 @@
 ﻿using Application.Services.Repositories;
 using AutoMapper;
+using Core.Application.Pipelines.Authorization;
 using Core.Application.Requests;
 using Core.Application.Responses;
 using Core.Persistence.Dynamic;
@@ -15,11 +16,14 @@ using System.Threading.Tasks;
 
 namespace Application.Features.FilmSessions.Queries.GetListByDynamic;
 
-public class GetListByDynamicFilmSessionQuery:IRequest<GetListResponse<GetListByDynamicFilmSessionListItemDto>>
+public class GetListByDynamicFilmSessionQuery:IRequest<GetListResponse<GetListByDynamicFilmSessionListItemDto>>//ISecuredRequest
 {
     
     public PageRequest  PageRequest { get; set; }
     public DynamicQuery DynamicQuery { get; set; }
+
+    //public string[] Roles =>new string[] { "admin","user"};
+
     public class GetListByDynamicFilmSessionQueryHandler : IRequestHandler<GetListByDynamicFilmSessionQuery, GetListResponse<GetListByDynamicFilmSessionListItemDto>>
     {
         private readonly IFilmSessionRepository _filmSessionRepository;

@@ -1,5 +1,6 @@
 ﻿using Application.Services.Repositories;
 using AutoMapper;
+using Core.Application.Pipelines.Authorization;
 using Core.Application.Requests;
 using Core.Application.Responses;
 using Core.Persistence.Paging;
@@ -14,8 +15,9 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Tickets.Queries.GetList;
 
-public class GetListTicketQuery:IRequest<GetListResponse<GetListTicketListItemDto>>
+public class GetListTicketQuery:IRequest<GetListResponse<GetListTicketListItemDto>>,ISecuredRequest
 {
+    public string[] Roles => new string[] { "admin","user" };
     public PageRequest PageRequest { get; set; }
     public class GetListTicketCommandHandler : IRequestHandler<GetListTicketQuery, GetListResponse<GetListTicketListItemDto>>
     {

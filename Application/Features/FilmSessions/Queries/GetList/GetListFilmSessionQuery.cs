@@ -1,5 +1,6 @@
 ﻿using Application.Services.Repositories;
 using AutoMapper;
+using Core.Application.Pipelines.Authorization;
 using Core.Application.Requests;
 using Core.Application.Responses;
 using Core.Persistence.Paging;
@@ -14,8 +15,9 @@ using System.Threading.Tasks;
 
 namespace Application.Features.FilmSessions.Queries.GetList;
 
-public class GetListFilmSessionQuery : IRequest<GetListResponse<GetListFilmSessionListItemDto>>
+public class GetListFilmSessionQuery : IRequest<GetListResponse<GetListFilmSessionListItemDto>>,ISecuredRequest
 {
+    public string[] Roles => new string[] { "admin","user" };
     public PageRequest PageRequest { get; set; }
 
     public class GetListFilmSessionQueryHandler : IRequestHandler<GetListFilmSessionQuery, GetListResponse<GetListFilmSessionListItemDto>>

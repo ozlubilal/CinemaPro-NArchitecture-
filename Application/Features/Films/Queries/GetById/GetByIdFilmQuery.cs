@@ -1,5 +1,6 @@
 ﻿using Application.Services.Repositories;
 using AutoMapper;
+using Core.Application.Pipelines.Authorization;
 using Core.Application.Responses;
 using Domain.Entities;
 using MediatR;
@@ -11,9 +12,11 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Films.Queries.GetById;
 
-public class GetByIdFilmQuery:IRequest<GetByIdFilmResponse>
+public class GetByIdFilmQuery : IRequest<GetByIdFilmResponse>, ISecuredRequest
 {
     public Guid Id { get; set; }
+
+    public string[] Roles =>new string[] {"admin","user"};
 
     public  class GetByIdFilmQueryHandler : IRequestHandler<GetByIdFilmQuery, GetByIdFilmResponse>
     {

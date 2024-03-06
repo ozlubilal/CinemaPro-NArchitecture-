@@ -1,6 +1,7 @@
 ﻿using Application.Features.Tickets.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
+using Core.Application.Pipelines.Authorization;
 using Domain.Entities;
 using Domain.Enums;
 using MediatR;
@@ -12,8 +13,9 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Tickets.Commands.Create;
 
-public class CreateTicketCommand : IRequest<CreatedTicketResponse>
-{   
+public class CreateTicketCommand : IRequest<CreatedTicketResponse>,ISecuredRequest
+{
+    public string[] Roles => new string[] { "admin" };
     public string? FirstName { get; set; }
     public string?  LastName { get; set; }
     public string? PhoneNumber { get; set; }

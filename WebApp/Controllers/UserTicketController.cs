@@ -62,7 +62,6 @@ namespace WebApp.Controllers
 
             ViewBag.getListTicketDto = getListTicketListItemDto;
 
-            // Diğer özellikler için aynı mantıkla devam edebilirsiniz.
 
             // Sonuçları filtrelenmiş listeye atayalım
             response.Items = filteredItems;

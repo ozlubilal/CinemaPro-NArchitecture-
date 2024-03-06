@@ -1,5 +1,6 @@
 ﻿using Application.Services.Repositories;
 using AutoMapper;
+using Core.Application.Pipelines.Authorization;
 using Domain.Entities;
 using MediatR;
 using System;
@@ -10,8 +11,9 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Saloons.Queries.GetById;
 
-public class GetByIdSaloonQuery : IRequest<GetByIdSaloonReponse>
+public class GetByIdSaloonQuery : IRequest<GetByIdSaloonReponse>,ISecuredRequest
 {
+    public string[] Roles => new string[] { "admin","user" };
     public Guid Id { get; set; }
     public class GetByIdSaloonQueryHandle : IRequestHandler<GetByIdSaloonQuery, GetByIdSaloonReponse>
     {

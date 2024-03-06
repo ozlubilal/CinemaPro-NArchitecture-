@@ -13,6 +13,7 @@
 </style>
 <div class="col-md-12">
 <div class="row pt-2">
+@*    Filtreleme bölümü*@
         <div class="card mx-4 col-md-2 bg-light">
             <div class="input-group mt-3 justify-content-end">
                 <button onclick="window.location.href='@Url.Action("GetList","UserTicket")'" class="btn btn-sm btn-secondary">Temizle</button>
@@ -47,7 +48,7 @@
         </div>
 
 
-
+@*Bilet Listesi*@
     <div class="col-md-9 mx-3"> 
         <div class="row">
             <div class="col-md-12">
@@ -78,7 +79,7 @@
                                         <td>
                                             @foreach (var seat in ticket.SelectedSeats)
                                             {
-                                                <span>@seat </span>
+                                                <span class="bg-danger mx-1 px-1 text-light">@seat </span>
                                                
                                             }
                                         </td>

@@ -1,6 +1,7 @@
 ﻿using Application.Features.Saloons.Queries.GetList;
 using Application.Services.Repositories;
 using AutoMapper;
+using Core.Application.Pipelines.Authorization;
 using Core.Application.Requests;
 using Core.Application.Responses;
 using Core.Persistence.Paging;
@@ -15,8 +16,9 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Users.Queries.GetList;
 
-public class GetListUserQuery:IRequest<GetListResponse<GetListUserListItemDto>>
+public class GetListUserQuery:IRequest<GetListResponse<GetListUserListItemDto>>,ISecuredRequest
 {
+    public string[] Roles => new string[] { "admin"};
     public PageRequest PageRequest { get; set; }
     public class GetListUserQueryHanlder : IRequestHandler<GetListUserQuery, GetListResponse<GetListUserListItemDto>>
     {

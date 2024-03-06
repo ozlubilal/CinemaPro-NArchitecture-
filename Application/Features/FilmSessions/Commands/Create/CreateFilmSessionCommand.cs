@@ -1,6 +1,7 @@
 ﻿using Application.Features.FilmSessions.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
+using Core.Application.Pipelines.Authorization;
 using Domain.Entities;
 using MediatR;
 using System;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.FilmSessions.Commands.Create;
 
-public class CreateFilmSessionCommand:IRequest<CreatedFilmSessionResponse>
+public class CreateFilmSessionCommand:IRequest<CreatedFilmSessionResponse>,ISecuredRequest
 {
     public Guid FilmId { get; set; }
     public Guid SaloonId { get; set; }
@@ -20,6 +21,7 @@ public class CreateFilmSessionCommand:IRequest<CreatedFilmSessionResponse>
     public TimeSpan StartTime { get; set; }
     public TimeSpan EndTime { get; set; }
 
+    public string[] Roles => new string[] { "admin" };
 
     public class CreateFilmSessionCommandHandler : IRequestHandler<CreateFilmSessionCommand, CreatedFilmSessionResponse>
     {

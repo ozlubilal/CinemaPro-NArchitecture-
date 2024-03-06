@@ -7,9 +7,9 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 @{
-    int rowCount = 0;
+    
+    int rowCount = 0+(Model.Index*10);
 }
-@ViewBag.x
 <div class="card-header text-center"><h2>Film Seansları</h2></div>
 <div class="">
     <button class="btn btn-success" onclick="window.location.href='@Url.Action("Add","FilmSession")'">Yeni Seans Ekle</button>
@@ -48,4 +48,52 @@
 
 
     </table>
+   @* Sayfalama kontrolleri *@
+@{
+    var currentPage = Model.Index + 1;
+    var totalPages = Model.Pages;
+}
+@if(totalPages>1)
+{
+<div>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item @(currentPage == 1 ? "disabled" : "")">
+                <a class="page-link" href="/FilmSession/GetList?pageIndex=@(currentPage - 2)&pageSize=@Model.Size" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                </a>
+            </li>
+            @for (int i = 0; i < totalPages; i++)
+            {
+                    if (i == 0 || i == currentPage - 2 || i == currentPage - 1 || i == currentPage || i == totalPages - 3 || i == totalPages - 2 || i == totalPages - 1)
+                {
+                    <li class="page-item @(currentPage == i + 1 ? "active" : "")">
+                        <a class="page-link" href="/FilmSession/GetList?pageIndex=@i&pageSize=@Model.Size">@((i + 1).ToString())</a>
+                    </li>
+                }
+                else if (i == 3)
+                {
+                    <li class="page-item disabled">
+                        <span class="page-link">...</span>
+                    </li>
+                }
+                else if (i == totalPages - 4)
+                {
+                    <li class="page-item disabled">
+                        <span class="page-link">...</span>
+                    </li>
+                }
+            }
+            <li class="page-item @(currentPage == totalPages ? "disabled" : "")">
+                <a class="page-link" href="/FilmSession/GetList?pageIndex=@(currentPage)&pageSize=@Model.Size" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+}
+
 </div>

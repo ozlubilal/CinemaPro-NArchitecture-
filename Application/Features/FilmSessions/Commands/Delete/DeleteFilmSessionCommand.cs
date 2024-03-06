@@ -1,5 +1,6 @@
 ﻿using Application.Services.Repositories;
 using AutoMapper;
+using Core.Application.Pipelines.Authorization;
 using Domain.Entities;
 using MediatR;
 using System;
@@ -10,9 +11,10 @@ using System.Threading.Tasks;
 
 namespace Application.Features.FilmSessions.Commands.Delete;
 
-public class DeleteFilmSessionCommand:IRequest<DeletedFilmSessionResponse>
+public class DeleteFilmSessionCommand:IRequest<DeletedFilmSessionResponse>,ISecuredRequest
 {
     public Guid Id { get; set; }
+    public string[] Roles => new string[] { "admin" };
     public class DeleteFilmSessionCommandHandler : IRequestHandler<DeleteFilmSessionCommand, DeletedFilmSessionResponse>
     {
         private readonly IFilmSessionRepository _filmSessionRepository;

@@ -3,6 +3,7 @@ using Application.Features.Films.Commands.Delete;
 using Application.Features.Films.Commands.Update;
 using Application.Features.Films.Queries.GetById;
 using Application.Features.Films.Queries.GetList;
+using Core.Application.Requests;
 using Core.Application.Responses;
 using Microsoft.AspNetCore.Mvc;
 using WebApp.Services;
@@ -23,9 +24,9 @@ namespace WebApp.Controllers
             return View();
         }
         [HttpGet]
-        public async Task<IActionResult> GetList()
+        public async Task<IActionResult> GetList(int pageIndex=0,int pageSize=20)
         {
-            GetListFilmQuery getListFilmQuery = new() { PageRequest = PageRequest };
+            GetListFilmQuery getListFilmQuery = new() { PageRequest=new PageRequest() {PageIndex=pageIndex,PageSize=pageSize } };
             GetListResponse<GetListFilmListItemDto> response = await Mediator.Send(getListFilmQuery);
             return View(response);
         }

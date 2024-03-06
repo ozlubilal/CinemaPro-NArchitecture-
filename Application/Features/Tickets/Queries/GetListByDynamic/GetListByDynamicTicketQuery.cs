@@ -1,5 +1,6 @@
 ﻿using Application.Services.Repositories;
 using AutoMapper;
+using Core.Application.Pipelines.Authorization;
 using Core.Application.Requests;
 using Core.Application.Responses;
 using Core.Persistence.Dynamic;
@@ -15,8 +16,9 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Tickets.Queries.GetListByDynamic;
 
-public class GetListByDynamicTicketQuery: IRequest<GetListResponse<GetListByDynamicTicketListItemDto>>
+public class GetListByDynamicTicketQuery: IRequest<GetListResponse<GetListByDynamicTicketListItemDto>>,ISecuredRequest
 {
+    public string[] Roles => new string[] { "admin", "user" };
     public PageRequest PageRequest { get; set; }
     public DynamicQuery DynamicQuery { get; set; }
 

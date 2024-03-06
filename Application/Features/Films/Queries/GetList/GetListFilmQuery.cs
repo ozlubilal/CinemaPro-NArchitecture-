@@ -22,7 +22,7 @@ public class GetListFilmQuery:IRequest<GetListResponse<GetListFilmListItemDto>>,
 {
     public PageRequest  PageRequest  { get; set; }
 
-    public string[] Roles => new string[] { "admin" };
+    public string[] Roles => new string[] { "admin","user" };
 
     //public string CacheKey => $"GetListFilmQuery({PageRequest.PageIndex},{PageRequest.PageSize})";
 

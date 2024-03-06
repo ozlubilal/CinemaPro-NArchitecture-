@@ -1,6 +1,7 @@
 ﻿using Application.Features.FilmSessions.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
+using Core.Application.Pipelines.Authorization;
 using Domain.Entities;
 using MediatR;
 using System;
@@ -11,8 +12,9 @@ using System.Threading.Tasks;
 
 namespace Application.Features.FilmSessions.Commands.Update;
 
-public class UpdateFilmSessionCommand : IRequest<UpdatedFilmSessionResponse>
+public class UpdateFilmSessionCommand : IRequest<UpdatedFilmSessionResponse>,ISecuredRequest
 {
+    public string[] Roles => new string[] { "admin" };
     public Guid Id { get; set; }
     public Guid FilmId { get; set; }
     public Guid SaloonId { get; set; }

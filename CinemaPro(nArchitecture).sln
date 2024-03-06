@@ -13,9 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Persistence", "Persistence\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{B92ABF05-990D-4293-85D1-8460B3DFE32D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cinema", "WebApplication1\Cinema.csproj", "{7FE5CBFE-B2AF-401E-9039-5A7DA3FFC8D8}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApp(Mvc)", "WebApp\WebApp(Mvc).csproj", "{0607CD7D-BE2C-44BB-8E48-F2492AF1D08C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApp", "WebApp\WebApp.csproj", "{0607CD7D-BE2C-44BB-8E48-F2492AF1D08C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,10 +41,6 @@ Global
 		{B92ABF05-990D-4293-85D1-8460B3DFE32D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B92ABF05-990D-4293-85D1-8460B3DFE32D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B92ABF05-990D-4293-85D1-8460B3DFE32D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7FE5CBFE-B2AF-401E-9039-5A7DA3FFC8D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7FE5CBFE-B2AF-401E-9039-5A7DA3FFC8D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7FE5CBFE-B2AF-401E-9039-5A7DA3FFC8D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7FE5CBFE-B2AF-401E-9039-5A7DA3FFC8D8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0607CD7D-BE2C-44BB-8E48-F2492AF1D08C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0607CD7D-BE2C-44BB-8E48-F2492AF1D08C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0607CD7D-BE2C-44BB-8E48-F2492AF1D08C}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -1,27 +1,57 @@
-﻿@using Application.Features.FilmSessions.Queries.GetList;
-@using Application.Features.FilmSessions.Queries.GetListByDynamic;
-@using Core.Application.Responses;
+﻿    @using Application.Features.FilmSessions.Queries.GetList;
+    @using Application.Features.FilmSessions.Queries.GetListByDynamic;
+    @using Core.Application.Responses;
 
-@model GetListResponse<GetListByDynamicFilmSessionListItemDto>
-@{
-    Layout = "~/Views/Shared/_UserLayout.cshtml";
-}
+    @model GetListResponse<GetListByDynamicFilmSessionListItemDto>
+    @{
+        Layout = "~/Views/Shared/_UserLayout.cshtml";
+    }
 
-<div class="row mx-5 pt-3">
-    @foreach (var item in Model.Items)
-    {
-        <div class="mx-2  mb-3">           
-            <div class="card">
-                <img src="@item.ImageUrl" height="270" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title" style="height:60px; width:150px">@item.FilmName</h5>
-                    <p class="card-text">@item.SaloonName</p>
-                    <p class="card-text">Başlangıç:&nbsp;&nbsp; @item.StartTime.ToString("hh\\:mm")</p>
-                    <p class="card-text">Bitiş &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;:&nbsp;&nbsp; @item.EndTime.ToString("hh\\:mm")</p>
-                    <p class="card-text">Fiyat &nbsp; &nbsp; &nbsp; :&nbsp;&nbsp; @item.Price</p>
-                    <a href="/UserTicket/Add/@item.Id" class="btn btn-primary">Bilet Ekle</a>
+    <div class="col-md-12">
+        <div class="row pt-3">
+        @*Filtreleme bölümü*@
+            <div class="card mx-4 mt-3 p-2 col-md-2 bg-light h-100">
+                <div class="input-group mt-3 mb-2 justify-content-end">
+                    <button onclick="window.location.href='@Url.Action("Index","UserHome")'" class="btn btn-sm btn-secondary">Temizle</button>
+                </div>
+                <form method="post" action="/UserHome/Index"> 
+                    <select name="FilmName" class="form-control">
+                        <option value="">Film Seçiniz</option>
+                        @foreach (var filmName in ViewBag.FilmList)
+                        {
+                            <option value="@filmName" >@filmName</option>
+                        }
+                    </select>
+                    <div class="input-group mt-3">
+                        <input name="StartTime" type="time" class="form-control" aria-label="Başlangıç Zamanı ara..." value="@(!string.IsNullOrEmpty(ViewBag.StartTime) ? ViewBag.StartTime : "")" aria-describedby="button-addon2">
+                    </div>
+                    <div class="input-group mt-3">
+                    </div>    
+                    <div class="input-group mt-3 ">
+                        <button type="submit" class="btn btn-primary">Filtrele</button>
+                    </div>
+                </form>
+            </div>
+         @*Filmler*@
+            <div class="col-md-9">
+                <div class="row pt-3">
+                    @foreach (var item in Model.Items)
+                    {
+                        <div class="mx-2  mb-3">
+                            <div class="card">
+                                <img src="@item.ImageUrl" height="270" class="card-img-top" alt="...">
+                                <div class="card-body">
+                                    <h5 class="card-title" style="height:60px; width:150px">@item.FilmName</h5>
+                                    <p class="card-text">@item.SaloonName</p>
+                                    <p class="card-text">Başlangıç:&nbsp;&nbsp; @item.StartTime.ToString("hh\\:mm")</p>
+                                    <p class="card-text">Bitiş &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;:&nbsp;&nbsp; @item.EndTime.ToString("hh\\:mm")</p>
+                                    <p class="card-text">Fiyat &nbsp; &nbsp; &nbsp; :&nbsp;&nbsp; @item.Price</p>
+                                    <a href="/UserTicket/Add/@item.Id" class="btn btn-primary">Bilet Ekle</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
                 </div>
             </div>
         </div>
-    }
-</div>
+    </div>

@@ -1,5 +1,6 @@
 ﻿using Application.Services.Repositories;
 using AutoMapper;
+using Core.Application.Pipelines.Authorization;
 using Core.Application.Pipelines.Caching;
 using Domain.Entities;
 using MediatR;
@@ -12,11 +13,12 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Films.Commands.Update;
 
-public class UpdateFilmCommand : IRequest<UpdatedFilmResponse>
+public class UpdateFilmCommand : IRequest<UpdatedFilmResponse>,ISecuredRequest
 {
     public Guid Id { get; set; }
     public string Name { get; set; }
 
+    public string[] Roles => new string[] { "admin" };
 
     public class UpdateFilmCommandHandler : IRequestHandler<UpdateFilmCommand, UpdatedFilmResponse>
     {
